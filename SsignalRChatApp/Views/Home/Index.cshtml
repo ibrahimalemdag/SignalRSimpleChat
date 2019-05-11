@@ -1,0 +1,48 @@
+﻿@model SsignalRChatApp.MessageViewModel
+
+@using (Html.BeginForm(/*"add", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }*/))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row" style="min-height:100%">
+        <div class="col-md-9">
+            <div class="container-fluid">
+                <div class="form-group">
+                    @Html.HiddenFor(model => model.Id)
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control", @required = "required", @id = "chatMessage", @placeholder = "Type Message..." } })
+                        @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-1">
+                        <input type="submit" value="Gönder" class="btn btn-primary" id="sendMessage" />
+                    </div>
+                </div>
+                @*<input asp-action="add" class="form-control" id="chatMessage" placeholder="Type Message..." name="message">*@
+            </div>
+            <div class="pre-scrollable" id="messageContainer">
+                <ul id="messageList"></ul>
+            </div>
+        </div>
+        <div class="col-md-3 bg-warning">
+            <div class="container" id="Subscribers">
+                <div id="userName">@ViewData["Title"]</div>
+                <h2>Online</h2>
+            </div>
+        </div>
+    </div>
+
+    <style>
+
+        .time-right {
+            float: right;
+            color: #aaa;
+        }
+
+        .time-left {
+            float: left;
+            color: #999;
+        }
+    </style>
+
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+}
